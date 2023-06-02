@@ -3,7 +3,7 @@ project(HelloSFML)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(HelloSFML main.cpp)
+add_executable(HelloSFML main.cpp Renderer.h GameManager.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML-2.5.1/lib/cmake/SFML)
