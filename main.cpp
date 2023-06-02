@@ -86,12 +86,15 @@ void flaggedCell(const std::vector<std::vector<int>>& board, std::vector<std::ve
     }
 
     if (flagged[x][y]) {
+        // Oznacznie pola
         flagged[x][y] = false;
     }
+    else{
+        // Zaznacznie pola
+        flagged[x][y] = true;
+    }
 
-    flagged[x][y] = true;
 }
-
 
 // Funkcja rysująca plansze
 void drawBoard(sf::RenderWindow& window, const std::vector<std::vector<int>>& board, const std::vector<std::vector<bool>>& revealed, std::vector<std::vector<bool>>& flagged)
@@ -106,7 +109,6 @@ void drawBoard(sf::RenderWindow& window, const std::vector<std::vector<int>>& bo
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
             s.setPosition(x * CELL_SIZE, y * CELL_SIZE);
-            if (flagged[x][y])
             if (revealed[x][y]) {
                 // Komórka odkryta - rysuje wartość lub minę
                 if (board[x][y] == -1) {
@@ -117,29 +119,40 @@ void drawBoard(sf::RenderWindow& window, const std::vector<std::vector<int>>& bo
                     s.setTextureRect(sf::IntRect (board[x][y] * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE));
 
                 }
-            } else {
-                // Komórka nieodkryta - rysuje puste tło
-                s.setTextureRect(sf::IntRect (10 * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE));
+            }
+            else {
+                if (flagged[x][y] == true){
+                    // Komórka zaznaczona - rysuje flage
+                    s.setTextureRect(sf::IntRect (11 * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE));
+                }
+                else{
+                    // Komórka nieodkryta - rysuje puste tło
+                    s.setTextureRect(sf::IntRect (10 * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE));
+                }
+
             }
 
             window.draw(s);
         }
     }
 }
+
 // Funkcja do obslugi planszy
-void handleMouseClick(sf::RenderWindow& window, const sf::Event& event, std::vector<std::vector<bool>>& revealed, const std::vector<std::vector<int>>& board)
+void handleMouseClick(sf::RenderWindow& window, const sf::Event& event, std::vector<std::vector<bool>>& revealed, const std::vector<std::vector<int>>& board, std::vector<std::vector<bool>>& flagged)
 {
     if (event.mouseButton.button == sf::Mouse::Left) {
         int x = event.mouseButton.x / CELL_SIZE;
         int y = event.mouseButton.y / CELL_SIZE;
 
+        //fukcja odkrywajaca pole
         revealCell(board, revealed, x, y);
     }
     if (event.mouseButton.button == sf::Mouse::Right) {
         int x = event.mouseButton.x / CELL_SIZE;
         int y = event.mouseButton.y / CELL_SIZE;
-        //funkcja do zaznaczania flagi na mapie
 
+        //funkcja do zaznaczania flagi na mapie
+        flaggedCell(board, flagged, x, y);
     }
 }
 
@@ -166,7 +179,7 @@ int main()
             if (event.type == sf::Event::Closed) {
                 window.close();
             } else if (event.type == sf::Event::MouseButtonPressed) {
-                handleMouseClick(window, event, revealed, board);
+                handleMouseClick(window, event, revealed, board, flagged);
             }
         }
 

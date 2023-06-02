@@ -3,7 +3,7 @@ project(HelloSFML)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(HelloSFML main.cpp cmake-build-debug/tak.cpp)
+add_executable(HelloSFML main.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML-2.5.1/lib/cmake/SFML)
