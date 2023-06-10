@@ -6,15 +6,15 @@
 #define HELLOSFML_CELL_H
 
 class Cell {
-protected:
-    bool revealed;
-    bool flagged;
 
 public:
     Cell();
     void reveal();
     void flag();
     virtual void displaySymbol() const = 0;
+
+    bool revealed;
+    bool flagged;
 };
 
 #endif //HELLOSFML_CELL_H

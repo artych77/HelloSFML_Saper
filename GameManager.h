@@ -10,7 +10,7 @@
 
 
 class GameManager {
-private:
+protected:
     bool isGameActive;
     GameBoard gameBoard;
     Player player;

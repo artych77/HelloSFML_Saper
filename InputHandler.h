@@ -6,13 +6,14 @@
 #define HELLOSFML_INPUTHANDLER_H
 
 #include <SFML/Graphics.hpp>
+#include "GameBoard.h"
 
 
 class InputHandler {
 public:
     InputHandler();
 
-    void handleInput(sf::RenderWindow& window);
+    void handleInput(sf::RenderWindow& window, GameBoard& gameBoard);
 
 };
 

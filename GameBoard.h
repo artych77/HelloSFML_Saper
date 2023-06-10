@@ -7,12 +7,15 @@
 
 #include <vector>
 #include "Cell.h"
+#include <cstdlib>
+#include <ctime>
 
 class GameBoard {
 private:
     int width;
     int height;
     std::vector<std::vector<Cell*>> grid;
+    std::vector<std::vector<int>> board;
 
 public:
     GameBoard(int boardWidth, int boardHeight);

@@ -6,6 +6,7 @@
 #define HELLOSFML_CELLNUMBER_H
 
 #include "Cell.h"
+#include <SFML/Graphics.hpp>
 
 class CellNumber : Cell {
 private:

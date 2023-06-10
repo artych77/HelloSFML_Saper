@@ -6,6 +6,7 @@
 #define HELLOSFML_CELLMINE_H
 
 #include "Cell.h"
+#include <SFML/Graphics.hpp>
 
 class CellMine : public Cell {
 private:

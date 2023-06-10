@@ -6,6 +6,7 @@
 #define HELLOSFML_CELLEMPTY_H
 
 #include "Cell.h"
+#include <SFML/Graphics.hpp>
 
 class CellEmpty : public Cell {
 public:
