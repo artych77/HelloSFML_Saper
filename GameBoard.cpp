@@ -44,18 +44,18 @@ void GameBoard::createBoard() {
             int x = rand() % width;
             int y = rand() % height;
 
-            if (board[y][x] != -1) {
+            if (board[x][y] != -1) {
                 // Jeśli pole nie jest miną, zamień je na pole z miną
-                delete grid[y][x];
-                grid[y][x] = new CellMine();
-                board[y][x] = -1;
+                delete grid[x][y];
+                grid[x][y] = new CellMine();
+                board[x][y] = -1;
                 ++generatedMines;
             }
         }
     // Obliczanie liczby min sąsiadujących z każdym polem
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            if (board[y][x] != -1) {
+            if (board[x][y] != -1) {
                 int count = 0;
 
                 // Sprawdzanie sąsiadujących pól
@@ -68,11 +68,11 @@ void GameBoard::createBoard() {
                 if (x < height-1 && board[x+1][y] == -1) count++;
                 if (y < width-1 && x < height-1 && board[x+1][y+1] == -1) count++;
 
-                board[y][x] = count;
-                if (board[y][x] > 0) {
+                board[x][y] = count;
+                if (board[x][y] > 0) {
                     // Jeśli pole nie jest miną i zwyklym polem, zamień je na pole z liczba
-                    delete grid[y][x];
-                    grid[y][x] = new CellNumber(count);
+                    delete grid[x][y];
+                    grid[x][y] = new CellNumber(count);
 
                 }
             }
@@ -81,73 +81,41 @@ void GameBoard::createBoard() {
 
 }
 
-void GameBoard::displayBoard() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Minesweeper");
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            } else if (event.type == sf::Event::MouseButtonPressed) {
-                sf::Event event;
-                while (window.pollEvent(event)) {
-                    if (event.type == sf::Event::Closed) {
-                        window.close();
-                    }
-                    if (event.mouseButton.button == sf::Mouse::Left) {
-                        int x = event.mouseButton.x / 32;
-                        int y = event.mouseButton.y / 32;
+void GameBoard::displayBoard(sf::RenderWindow& window) {
+    int width = board.size();
+    int height = board[0].size();
+    sf::Texture t;
+    t.loadFromFile("C:\\Users\\Michal\\CLionProjects\\HelloSFML\\image\\tiles.jpg");
+    sf::Sprite s(t);
 
-                        //fukcja odkrywajaca pole
-                        revealCell(x, y);
+    // Rysuje wszystkie komórki na planszy
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            s.setPosition(x * 32, y * 32);
+            if (grid[x][y]->revealed) {
+                // Komórka odkryta - rysuje wartość lub minę
+                if (board[x][y] == -1) {
+                    //Kod rysujący minę na komórce
+                    s.setTextureRect(sf::IntRect (9 * 32, 0, 32, 32));
+                } else {
+                    //Kod rysujący wartość liczbową na komórce
+                    s.setTextureRect(sf::IntRect (board[x][y] * 32, 0, 32, 32));
 
-                    }
-                    if (event.mouseButton.button == sf::Mouse::Right) {
-                        int x = event.mouseButton.x / 32;
-                        int y = event.mouseButton.y / 32;
-
-                        //funkcja do zaznaczania flagi na mapie
-                        flagCell(x, y);
-                    }
                 }
             }
-
-            window.clear();
-            sf::Texture t;
-            t.loadFromFile("C:\\Users\\Michal\\CLionProjects\\HelloSFML\\image\\tiles.jpg");
-            sf::Sprite s(t);
-
-            // Rysuje wszystkie komórki na planszy
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    s.setPosition(x * 32, y * 32);
-                    //kod do rysowania pola
-                    if (grid[x][y]->revealed) {
-                        // Komórka odkryta - rysuje wartość lub minę
-                        if (board[x][y] == -1) {
-                            //Kod rysujący minę na komórce
-                            s.setTextureRect(sf::IntRect (9 * 32, 0, 32, 32));
-                        } else {
-                            //Kod rysujący wartość liczbową na komórce
-                            s.setTextureRect(sf::IntRect (board[x][y] * 32, 0, 32, 32));
-                        }
-                    }
-                    else {
-                        if (grid[x][y]->flagged){
-                            // Komórka zaznaczona - rysuje flage
-                            s.setTextureRect(sf::IntRect (11 * 32, 0, 32, 32));
-                        }
-                        else{
-                            // Komórka nieodkryta - rysuje puste tło
-                            s.setTextureRect(sf::IntRect (10 * 32, 0, 32, 32));
-                        }
-
-                    }
-                    window.draw(s);
+            else {
+                if (grid[x][y]->flagged == true){
+                    // Komórka zaznaczona - rysuje flage
+                    s.setTextureRect(sf::IntRect (11 * 32, 0, 32, 32));
+                }
+                else{
+                    // Komórka nieodkryta - rysuje puste tło
+                    s.setTextureRect(sf::IntRect (10 * 32, 0, 32, 32));
                 }
 
             }
-            window.display();
+
+            window.draw(s);
         }
     }
 }
@@ -155,6 +123,9 @@ void GameBoard::displayBoard() {
 
 
 void GameBoard::revealCell(int x, int y) {
+    if (x < 0 || x >= board.size() || y < 0 || y >= board.size()) {
+        return;
+    }
     // Odkrywanie zawartości komórki o podanych współrzędnych
     if (grid[x][y]->revealed) {
         return;
@@ -164,7 +135,12 @@ void GameBoard::revealCell(int x, int y) {
 
     if (board[x][y] == -1) {
         // Koniec gry - komórka z miną
-        //GameOver
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                // Odkrywanie całej planszy
+                grid[i][j]->revealed = true;
+            }
+        }
         return;
     }
 
@@ -174,10 +150,14 @@ void GameBoard::revealCell(int x, int y) {
     }
     // Jeśli pole jest puste, odkryj sąsiednie pola rekurencyjnie
     if (board[x][y] == 0) {
-        revealCell(x - 1, y); // Odkryj pole na lewo
-        revealCell(x + 1, y); // Odkryj pole na prawo
-        revealCell(x, y - 1); // Odkryj pole u góry
-        revealCell(x, y + 1); // Odkryj pole na dole
+        revealCell( x-1, y-1);
+        revealCell( x, y-1);
+        revealCell( x+1, y-1);
+        revealCell( x-1, y);
+        revealCell( x+1, y);
+        revealCell( x-1, y+1);
+        revealCell( x, y+1);
+        revealCell( x+1, y+1);
     }
 }
 
@@ -195,26 +175,18 @@ void GameBoard::flagCell(int x, int y) {
 
 bool GameBoard::checkGameStatus() const {
     // Sprawdzanie stanu gry, czy gra została wygrana lub przegrana
-    int flaggedMines = 0;
-    int unrevealedCells = 0;
-
-    // Sprawdzenie ilości oznaczonych min i nieodkrytych pól
-    for (const auto& row : grid) {
-        for (const auto& cell : row) {
-           // if (cell->flagged && /*sprawdzenie czy zaznaczamy mine*/ ) {
-           //     flaggedMines++;
-           //}
-            if (!cell->revealed) {
-                unrevealedCells++;
-            }
+    int mines = 0;
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            if (grid[j][i]->revealed == false)
+                mines++;
         }
     }
-
     // Sprawdzenie warunków wygranej lub przegranej
-    if (/*flaggedMines == 10 &&*/ unrevealedCells == 10) {
+    if (mines == 10) {
         return true;  // Gra wygrana
-    } else if (unrevealedCells == 0 /*&& flaggedMines != 10*/) {
-        return true;  // Gra przegrana
     }
     return false;
 }

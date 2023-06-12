@@ -13,7 +13,7 @@ class InputHandler {
 public:
     InputHandler();
 
-    void handleInput(sf::RenderWindow& window, GameBoard& gameBoard);
+    void handleInput(sf::RenderWindow& window,const sf::Event& event, GameBoard& gameBoard);
 
 };
 

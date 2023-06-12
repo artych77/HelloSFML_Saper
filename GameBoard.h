@@ -9,6 +9,7 @@
 #include "Cell.h"
 #include <cstdlib>
 #include <ctime>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class GameBoard {
 private:
@@ -19,7 +20,7 @@ public:
     GameBoard(int boardWidth, int boardHeight);
     ~GameBoard();
     void createBoard();
-    void displayBoard();
+    void displayBoard(sf::RenderWindow& window);
     void revealCell(int x, int y);
     void flagCell(int x, int y);
     bool checkGameStatus() const;

@@ -24,15 +24,28 @@ void Game::gameLoop()
     bool isGameRunning = true;
     gameBoard.createBoard();
 
-    while (isGameRunning)
-    {
+        sf::RenderWindow window(sf::VideoMode(500, 400), "Minesweeper");
+        while (window.isOpen()) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                } else if (event.type == sf::Event::MouseButtonPressed) {
+                    inputHandler.handleInput(window, event, gameBoard);
+                }
+            }
 
-        gameBoard.displayBoard();
+            window.clear();
+            gameBoard.displayBoard(window);
+            window.display();
+            if(gameBoard.checkGameStatus()){
+                break;
+            }
+        }
 
-        isGameRunning = !gameManager.isGameOver();
-    }
 
-    if (gameManager.isGameWon())
+
+    if (gameBoard.checkGameStatus())
     {
         renderer.displayWinScreen();
     }

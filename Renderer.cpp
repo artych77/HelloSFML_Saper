@@ -66,7 +66,7 @@ void Renderer::displayStartScreen() {
 
 void Renderer::displayBoard(GameBoard& gameBoard) {
     // Wyświetlanie planszy
-    gameBoard.displayBoard();
+   // gameBoard.displayBoard(window);
 }
 
 void Renderer::displayWinScreen() {

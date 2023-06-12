@@ -22,6 +22,7 @@ private:
     Player player;
     GameManager gameManager;
     Renderer renderer;
+    InputHandler inputHandler;
 
     void gameLoop();
 };

@@ -28,5 +28,9 @@ bool GameManager::isGameWon() const {
     // Sprawdzenie warunków wygranej gry
     // Zwraca true, jeśli gra została wygrana
     // W przeciwnym razie zwraca false
-    return true;
+    if (gameBoard.checkGameStatus())
+    {
+        return true;
+    }
+    return false;
 }
