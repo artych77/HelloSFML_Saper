@@ -22,11 +22,8 @@ private:
     Player player;
     GameManager gameManager;
     Renderer renderer;
-    InputHandler inputHandler;
 
     void gameLoop();
-    void handleInput(const std::string& input);
-    std::string getPlayerName();
 };
 
 

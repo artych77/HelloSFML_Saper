@@ -8,7 +8,7 @@
 #include "Cell.h"
 #include <SFML/Graphics.hpp>
 
-class CellNumber : Cell {
+class CellNumber :public Cell {
 private:
     int surroundingMines;
 

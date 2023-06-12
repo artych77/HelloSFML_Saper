@@ -11,7 +11,6 @@ void CellMine::displaySymbol() const {
     sf::Texture t;
     t.loadFromFile("C:\\Users\\Michal\\CLionProjects\\HelloSFML\\image\\tiles.jpg");
     sf::Sprite s(t);
-
     if (revealed) {
         // Komórka odkryta - rysuje wartość lub minę
         if (mine) {

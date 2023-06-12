@@ -5,26 +5,30 @@
 #include "Renderer.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <synchapi.h>
+#include "Cell.h"
+#include "CellMine.h"
 
 Renderer::Renderer() {}
 
 void Renderer::displayStartScreen() {
     // Wyświetlanie ekranu startowego
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Wprowadź swoje imię");
+   setlocale(LC_CTYPE, "Polish");
+    //problem z polskimi znakami
+    sf::RenderWindow window(sf::VideoMode(300, 200), "Wprowadz swoje imie");
     sf::Font font;
-    if (!font.loadFromFile("C:\\Users\\Michal\\OneDrive\\Dokumenty\\hack2022\\HelloSFML_Saper\\fonts\\arial.ttf")) {
-        std::cout << "Błąd ładowania czcionki." << std::endl;
-    }
+    font.loadFromFile("C:\\Users\\Michal\\OneDrive\\Dokumenty\\hack2022\\HelloSFML_Saper\\fonts\\arial.ttf");
 
     sf::Text text;
     text.setFont(font);
     text.setCharacterSize(24);
-    text.setString("Wprowadź swoje imię:");
+    text.setFillColor(sf::Color::White);
+    text.setString("Wprowadz swoje imie:");
     text.setPosition(20, 20);
 
     sf::RectangleShape inputBox(sf::Vector2f(300, 40));
     inputBox.setPosition(20, 60);
-    inputBox.setOutlineColor(sf::Color::Black);
+    inputBox.setOutlineColor(sf::Color::Green);
     inputBox.setOutlineThickness(2);
     sf::Text inputText;
     inputText.setFont(font);
@@ -53,19 +57,71 @@ void Renderer::displayStartScreen() {
         }
 
         window.clear();
+        window.draw(text);
         window.draw(inputText);
         window.display();
+
     }
 }
 
-void Renderer::displayBoard(const GameBoard& gameBoard) {
+void Renderer::displayBoard(GameBoard& gameBoard) {
     // Wyświetlanie planszy
+    gameBoard.displayBoard();
 }
 
 void Renderer::displayWinScreen() {
     // Wyświetlanie ekranu wygranej
+    sf::RenderWindow window(sf::VideoMode(400, 300), "Wygrana!");
+
+    sf::Font font;
+    font.loadFromFile("C:\\Users\\Michal\\OneDrive\\Dokumenty\\hack2022\\HelloSFML_Saper\\fonts\\arial.ttf");
+
+
+    sf::Text text;
+    text.setFont(font);
+    text.setCharacterSize(48);
+    text.setFillColor(sf::Color::White);
+    text.setString("Wygrana!");
+    text.setPosition(100, 100);
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        window.clear();
+        window.draw(text);
+        window.display();
+    }
 }
 
 void Renderer::displayLoseScreen() {
     // Wyświetlanie ekranu przegranej
+    sf::RenderWindow window(sf::VideoMode(400, 300), "Przegrana!");
+
+    sf::Font font;
+    font.loadFromFile("C:\\Users\\Michal\\OneDrive\\Dokumenty\\hack2022\\HelloSFML_Saper\\fonts\\arial.ttf");
+
+    sf::Text text;
+    text.setFont(font);
+    text.setCharacterSize(48);
+    text.setFillColor(sf::Color::White);
+    text.setString("Przegrana!");
+    text.setPosition(100, 100);
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        window.clear();
+        window.draw(text);
+        window.display();
+    }
 }

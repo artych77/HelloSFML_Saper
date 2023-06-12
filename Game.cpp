@@ -6,15 +6,14 @@
 #include <iostream>
 
 Game::Game(int width, int height)
-        : gameBoard(width, height), player(), gameManager(), renderer(), inputHandler()
-{
-}
+        : gameBoard(width, height), player(), gameManager(), renderer(){}
 
 void Game::startGame()
 {
-    std::string playerName = getPlayerName();
-    player.setName(playerName);
+    std::string playerName;
+    renderer.displayStartScreen();
 
+    player.setName(playerName);
     gameManager.initializeGame(playerName);
 
     gameLoop();
@@ -23,16 +22,12 @@ void Game::startGame()
 void Game::gameLoop()
 {
     bool isGameRunning = true;
+    gameBoard.createBoard();
 
     while (isGameRunning)
     {
-        renderer.displayBoard(gameBoard);
 
-        std::string input;
-        std::cout << "Enter your move: ";
-        std::cin >> input;
-
-        handleInput(input);
+        gameBoard.displayBoard();
 
         isGameRunning = !gameManager.isGameOver();
     }
@@ -47,15 +42,3 @@ void Game::gameLoop()
     }
 }
 
-void Game::handleInput(const std::string& input)
-{
-    inputHandler.handleInput();
-}
-
-std::string Game::getPlayerName()
-{
-    /*std::string playerName;
-    std::cout << "Enter your name: ";
-    std::cin >> playerName;
-    return playerName; */ // Jakas fukcja do pobierania imienia
-}
