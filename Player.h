@@ -15,11 +15,11 @@ private:
 
 public:
     Player();
-    Player(const std::string& playerName);
+    [[maybe_unused]] Player(std::string  playerName);
     void setName(const std::string& playerName);
     void setScore(int playerScore);
-    std::string getName() const;
-    int getScore() const;
+    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] int getScore() const;
 
 };
 

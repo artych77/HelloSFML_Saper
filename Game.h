@@ -8,7 +8,6 @@
 #include "string"
 #include "GameBoard.h"
 #include "Player.h"
-#include "GameManager.h"
 #include "Renderer.h"
 #include "InputHandler.h"
 
@@ -20,7 +19,6 @@ public:
 private:
     GameBoard gameBoard;
     Player player;
-    GameManager gameManager;
     Renderer renderer;
     InputHandler inputHandler;
 

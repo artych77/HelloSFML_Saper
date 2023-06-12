@@ -1,12 +1,8 @@
-#include <iostream>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <locale.h>
 #include <SFML/Graphics.hpp>
 #include "Game.h"
-
-const int CELL_SIZE = 32; // Rozmiar pojedynczej komórki planszy
 
 
 // Funkcja generująca planszę z minami

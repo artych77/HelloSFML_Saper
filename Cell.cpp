@@ -6,10 +6,3 @@
 
 Cell::Cell() : revealed(false), flagged(false) {}
 
-void Cell::reveal() {
-    revealed = true;
-}
-
-void Cell::flag() {
-    flagged = !flagged;
-}

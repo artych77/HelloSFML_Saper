@@ -9,8 +9,6 @@ class Cell {
 
 public:
     Cell();
-    void reveal();
-    void flag();
     virtual void displaySymbol() const = 0;
 
     bool revealed;

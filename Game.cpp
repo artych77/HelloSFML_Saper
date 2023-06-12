@@ -6,7 +6,7 @@
 #include <iostream>
 
 Game::Game(int width, int height)
-        : gameBoard(width, height), player(), gameManager(), renderer(){}
+        : gameBoard(width, height), player(),  renderer(){}
 
 void Game::startGame()
 {
@@ -14,19 +14,17 @@ void Game::startGame()
     renderer.displayStartScreen();
 
     player.setName(playerName);
-    gameManager.initializeGame(playerName);
 
     gameLoop();
 }
 
 void Game::gameLoop()
 {
-    bool isGameRunning = true;
     gameBoard.createBoard();
 
         sf::RenderWindow window(sf::VideoMode(500, 400), "Minesweeper");
         while (window.isOpen()) {
-            sf::Event event;
+            sf::Event event{};
             while (window.pollEvent(event)) {
                 if (event.type == sf::Event::Closed) {
                     window.close();

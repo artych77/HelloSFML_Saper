@@ -4,9 +4,8 @@
 
 #include "InputHandler.h"
 #include "GameBoard.h"
-#include "GameManager.h"
 
-InputHandler::InputHandler() {}
+InputHandler::InputHandler() = default;
 
 void InputHandler::handleInput(sf::RenderWindow& window,const sf::Event& event, GameBoard& gameBoard) {
         if (event.mouseButton.button == sf::Mouse::Left) {

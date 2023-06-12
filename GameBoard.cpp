@@ -85,7 +85,7 @@ void GameBoard::displayBoard(sf::RenderWindow& window) {
     int width = board.size();
     int height = board[0].size();
     sf::Texture t;
-    t.loadFromFile("C:\\Users\\Michal\\CLionProjects\\HelloSFML\\image\\tiles.jpg");
+    t.loadFromFile(R"(C:\Users\Michal\CLionProjects\HelloSFML\image\tiles.jpg)");
     sf::Sprite s(t);
 
     // Rysuje wszystkie komórki na planszy
@@ -104,7 +104,7 @@ void GameBoard::displayBoard(sf::RenderWindow& window) {
                 }
             }
             else {
-                if (grid[x][y]->flagged == true){
+                if (grid[x][y]->flagged){
                     // Komórka zaznaczona - rysuje flage
                     s.setTextureRect(sf::IntRect (11 * 32, 0, 32, 32));
                 }
@@ -180,7 +180,7 @@ bool GameBoard::checkGameStatus() const {
     {
         for (int j = 0; j < 10; j++)
         {
-            if (grid[j][i]->revealed == false)
+            if (!grid[j][i]->revealed)
                 mines++;
         }
     }

@@ -6,16 +6,15 @@
 #define HELLOSFML_RENDERER_H
 
 #include "GameBoard.h"
-#include "GameManager.h"
 
 class Renderer {
 public:
     Renderer();
 
-    void displayStartScreen();
+    static void displayStartScreen();
     void displayBoard(GameBoard& gameBoard);
-    void displayWinScreen();
-    void displayLoseScreen();
+    static void displayWinScreen();
+    static void displayLoseScreen();
 
 };
 

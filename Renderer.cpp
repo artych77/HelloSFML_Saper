@@ -5,11 +5,9 @@
 #include "Renderer.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <synchapi.h>
-#include "Cell.h"
-#include "CellMine.h"
 
-Renderer::Renderer() {}
+
+Renderer::Renderer() = default;
 
 void Renderer::displayStartScreen() {
     // Wyświetlanie ekranu startowego
@@ -17,7 +15,7 @@ void Renderer::displayStartScreen() {
     //problem z polskimi znakami
     sf::RenderWindow window(sf::VideoMode(300, 200), "Wprowadz swoje imie");
     sf::Font font;
-    font.loadFromFile("C:\\Users\\Michal\\OneDrive\\Dokumenty\\hack2022\\HelloSFML_Saper\\fonts\\arial.ttf");
+    font.loadFromFile(R"(C:\Users\Michal\OneDrive\Dokumenty\hack2022\HelloSFML_Saper\fonts\arial.ttf)");
 
     sf::Text text;
     text.setFont(font);
@@ -39,7 +37,7 @@ void Renderer::displayStartScreen() {
     std::string playerName;
 
     while (window.isOpen()) {
-        sf::Event event;
+        sf::Event event{};
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -74,7 +72,7 @@ void Renderer::displayWinScreen() {
     sf::RenderWindow window(sf::VideoMode(400, 300), "Wygrana!");
 
     sf::Font font;
-    font.loadFromFile("C:\\Users\\Michal\\OneDrive\\Dokumenty\\hack2022\\HelloSFML_Saper\\fonts\\arial.ttf");
+    font.loadFromFile(R"(C:\Users\Michal\OneDrive\Dokumenty\hack2022\HelloSFML_Saper\fonts\arial.ttf)");
 
 
     sf::Text text;
@@ -85,7 +83,7 @@ void Renderer::displayWinScreen() {
     text.setPosition(100, 100);
 
     while (window.isOpen()) {
-        sf::Event event;
+        sf::Event event{};
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -103,7 +101,7 @@ void Renderer::displayLoseScreen() {
     sf::RenderWindow window(sf::VideoMode(400, 300), "Przegrana!");
 
     sf::Font font;
-    font.loadFromFile("C:\\Users\\Michal\\OneDrive\\Dokumenty\\hack2022\\HelloSFML_Saper\\fonts\\arial.ttf");
+    font.loadFromFile(R"(C:\Users\Michal\OneDrive\Dokumenty\hack2022\HelloSFML_Saper\fonts\arial.ttf)");
 
     sf::Text text;
     text.setFont(font);
@@ -113,7 +111,7 @@ void Renderer::displayLoseScreen() {
     text.setPosition(100, 100);
 
     while (window.isOpen()) {
-        sf::Event event;
+        sf::Event event{};
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();

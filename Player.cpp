@@ -4,9 +4,11 @@
 
 #include "Player.h"
 
+#include <utility>
+
 Player::Player() : name(""), score(0) {}
 
-Player::Player(const std::string& playerName) : name(playerName), score(0) {}
+[[maybe_unused]] Player::Player(std::string  playerName) : name(std::move(playerName)), score(0) {}
 
 void Player::setName(const std::string& playerName) {
     name = playerName;
